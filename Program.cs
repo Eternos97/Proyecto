@@ -3,7 +3,7 @@ using System;
 
 class Program
 {
-    static string connectionString = "Server=localhost; Database=tienda_; Uid=root; Pwd=;"; // Cambia según tu configuración
+    static string connectionString = "Server=localhost; Database=tienda_; Uid=root; Pwd=;";
 
     static void Main(string[] args)
     {
