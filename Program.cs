@@ -1,5 +1,63 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+public interface IDatabaseService
+{
+    int InsertarCategoria(string nombreCategoria);
+    int InsertarProducto(string nombre, decimal precio, int categoriaId);
+    int ModificarProducto(int id, string nombre, decimal precio);
+}
+
+
+public class DatabaseService : IDatabaseService
+{
+    private readonly string connectionString = "Server=localhost; Database=tienda_; Uid=root; Pwd=;";
+
+    public int InsertarCategoria(string nombreCategoria)
+    {
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "INSERT INTO categorias (nombre) VALUES (@nombre)";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@nombre", nombreCategoria);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public int InsertarProducto(string nombre, decimal precio, int categoriaId)
+    {
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "INSERT INTO productos (nombre, precio, categoria_id) VALUES (@nombre, @precio, @categoria_id)";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@precio", precio);
+                cmd.Parameters.AddWithValue("@categoria_id", categoriaId);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public int ModificarProducto(int id, string nombre, decimal precio)
+    {
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string query = "UPDATE productos SET nombre = @nombre, precio = @precio WHERE id = @id";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@precio", precio);
+                cmd.Parameters.AddWithValue("@id", id);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+    }
+}
 
 class Program
 {
