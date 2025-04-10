@@ -4,7 +4,7 @@ using System;
 class Program
 {
     static string connectionString = "Server=localhost; Database=tienda_; Uid=root; Pwd=;";
-    //hola
+    //hola prueba
     static void Main(string[] args)
     {
         while (true)
